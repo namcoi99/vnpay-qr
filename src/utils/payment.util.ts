@@ -1,5 +1,5 @@
 import { md5 } from ".";
-import { VnpayQrParams } from "../types";
+import { RefundQrParams, VnpayQrParams } from "../types";
 
 export const generateChecksum = (
   data: VnpayQrParams,
@@ -54,5 +54,30 @@ export const generateChecksum = (
       expDate +
       "|" +
       secret
+  );
+};
+
+export const generateRefundChecksum = (
+  data: RefundQrParams,
+  secret: string,
+) => {
+  const {
+      merchantCode,
+      qrTrace,
+      payTxnId,
+      refundTxnId,
+      typeRefund,
+      amount,
+      payDate,
+  } = data;
+  return md5(
+      secret +
+          merchantCode +
+          qrTrace +
+          payTxnId +
+          refundTxnId +
+          typeRefund +
+          amount +
+          payDate,
   );
 };

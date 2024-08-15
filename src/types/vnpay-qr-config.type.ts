@@ -29,4 +29,9 @@ export type VnpayQrConfig = {
    * Giá trị mặc định là 'A000000775'
    */
   masterMerCode: string;
+   /**
+     * secretKey sử dụng để gọi API hoàn tiền giao dịch
+     * secretKey = vnpayRefund
+     */
+   refundSecret: string;
 };

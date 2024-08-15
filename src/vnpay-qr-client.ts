@@ -7,7 +7,7 @@ import {
   VnpayQrConfig,
   VnpayQrParams,
 } from "./types";
-import { generateChecksum } from "./utils";
+import { generateChecksum, generateRefundChecksum } from "./utils";
 import axios from "axios";
 
 export class VnpayQrClient {
@@ -33,11 +33,13 @@ export class VnpayQrClient {
   }
 
   async refund(query: RefundQr) {
-    const { baseUrl, merchantCode } = this.config;
+    const { baseUrl, merchantCode, refundSecret } = this.config;
     const body: RefundQrParams = {
       merchantCode,
       ...query,
     };
+    body.checkSum = generateRefundChecksum(body, refundSecret);
+
     const response = await axios.post(
       `${baseUrl}/VnPaymentRefund/rest/vnpayment/refund`,
       body
