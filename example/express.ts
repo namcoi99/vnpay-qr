@@ -1,5 +1,5 @@
 import express, { type Request, type Response } from "express";
-import { VnpayQrClient } from "../src/vnpay-client";
+import { VnpayQrClient } from "../src/vnpay-qr-client";
 import { CountryCode, CurrencyCode } from "../src/constants";
 import dotenv from "dotenv";
 dotenv.config();
@@ -11,6 +11,7 @@ const {
   MERCHANT_CODE,
   MERCHANT_NAME,
   MERCHANT_TYPE,
+  REFUND_SECRET,
 } = process.env;
 
 const app = express();
@@ -23,6 +24,7 @@ const vnpayQrClient = new VnpayQrClient({
   merchantName: MERCHANT_NAME || "",
   merchantType: MERCHANT_TYPE || "",
   masterMerCode: "A000000775",
+  refundSecret: REFUND_SECRET || "",
 });
 
 app.get("/ping", (req: Request, res: Response) => {
